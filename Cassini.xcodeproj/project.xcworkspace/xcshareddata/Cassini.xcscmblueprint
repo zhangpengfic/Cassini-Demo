@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "BC29CA6AD6D40AA35C28283E6BB9E2342643E2FE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "BC29CA6AD6D40AA35C28283E6BB9E2342643E2FE" : 0,
+    "1FBFE754EC6DC9AFC96F0BDB9AD83488C1C55845" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5564434A-E61F-43C9-BCC3-F208EABE07E2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "BC29CA6AD6D40AA35C28283E6BB9E2342643E2FE" : "Cassini-Demo\/",
+    "1FBFE754EC6DC9AFC96F0BDB9AD83488C1C55845" : "Cassini"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Cassini",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Cassini.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Alberto-Vega\/Cassini.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1FBFE754EC6DC9AFC96F0BDB9AD83488C1C55845"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/zhangpengfic\/Cassini-Demo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BC29CA6AD6D40AA35C28283E6BB9E2342643E2FE"
+    }
+  ]
+}
