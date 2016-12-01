@@ -15,7 +15,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   //   we'll fetch the image from the imageURL
   // if we're off screen when this happens (view.window == nil)
   //   viewWillAppear will get it for us later
-  var imageURL: NSURL? {
+  var imageURL: URL? {
     didSet {
       image = nil
       if view.window != nil {
@@ -29,31 +29,34 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   // then puts a closure back on the main queue
   //   to handle putting the image in the UI
   //   (since we aren't allowed to do UI anywhere but main queue)
-  private func fetchImage() {
-    if let url = imageURL {
-      spinner?.startAnimating()
-      let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
-      dispatch_async(dispatch_get_global_queue(qos, 0)) { () -> Void in
-        let imageData = NSData(contentsOfURL: url) // this blocks the thread it is on
-        dispatch_async(dispatch_get_main_queue()) {
-        // only do something with this image
-        // if the url we fetched is the current imageURL we want
-        // (that might have changed while we were off fetching this one)
-        if url == self.imageURL { // the variable "url" is capture from above
-          if imageData != nil {
-            // this might be a waste of time if our MVC is out of action now
-            // which it might be if someone hit the Back button
-            // or otherwise removed us from split view or navigation controller
-            // while we were off fetching the image
-            self.image = UIImage(data: imageData!)
-          } else {
-            self.image = nil
-          }
-      }
+    fileprivate func fetchImage() {
+        if let url = imageURL {
+            spinner?.startAnimating()
+            // 获取一个全局队列， 全局对了异步
+            DispatchQueue.global().async {
+                
+                let imageData = try? Data(contentsOf: url)
+                // 主线程异步执行（主线程同步可能会死锁）
+                DispatchQueue.main.async(execute: {
+                    // only do something with this image
+                    // if the url we fetched is the current imageURL we want
+                    // (that might have changed while we were off fetching this one)
+                    if url == self.imageURL { // the variable "url" is capture from above
+                        if imageData != nil {
+                            // this might be a waste of time if our MVC is out of action now
+                            // which it might be if someone hit the Back button
+                            // or otherwise removed us from split view or navigation controller
+                            // while we were off fetching the image
+                            self.image = UIImage(data: imageData!)
+                        } else {
+                            self.image = nil
+                        }
+                    }
+                    
+                })
+            }
         }
     }
-  }
-  }
   
   
   @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -68,18 +71,18 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   
   // UIScrollViewDelegate method
   // required for zooming
-  func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+  func viewForZooming(in scrollView: UIScrollView) -> UIView? {
     return imageView
   }
   
-  private var imageView = UIImageView()
+  fileprivate var imageView = UIImageView()
   
   // convenience computed property
   // lets us get involved every time we set an image in imageView
   // we can do things like resize the imageView,
   //   set the scroll view's contentSize,
   //   and stop the spinner
-  private var image: UIImage? {
+  fileprivate var image: UIImage? {
     get { return imageView.image}
     set {
       imageView.image = newValue
@@ -99,7 +102,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   
   // for efficiency, we will only actually fetch the image
   // when we know we are going to be on screen
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if image == nil {
       fetchImage()
